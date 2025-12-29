@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Innovation Hub | SUNY Oswego Aquatic Conservation Lab</title>
+    <style>
+      :root {
+        --ink: #1c1b1a;
+        --sand: #f3efe7;
+        --clay: #d8cbb6;
+        --tide: #1f5b62;
+        --coral: #f25f4c;
+        --moss: #6a7a5b;
+        --paper: #fffdf8;
+        --shadow: rgba(27, 22, 19, 0.12);
+        --oswego-green: #1d5b45;
+        --oswego-gold: #caa23a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "DM Serif Display", "Georgia", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 85% 0%, rgba(202, 162, 58, 0.18), transparent 45%),
+          radial-gradient(circle at 15% 20%, rgba(29, 91, 69, 0.12), transparent 42%),
+          radial-gradient(circle at 20% 10%, #f6f0e6, var(--sand) 55%, #efe6d4 100%);
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      section[id],
+      header.hero {
+        scroll-margin-top: 96px;
+      }
+
+      .top-bar {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: rgba(255, 253, 248, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(202, 162, 58, 0.28);
+      }
+
+      .top-bar-inner {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+      }
+
+      .brand span {
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.4em;
+      }
+
+      nav {
+        display: flex;
+        gap: 18px;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+      }
+
+      nav a {
+        position: relative;
+        padding-bottom: 4px;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--oswego-gold), var(--oswego-green));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+      }
+
+      nav a:hover::after {
+        transform: scaleX(1);
+      }
+
+      nav a.nav-accent {
+        color: var(--oswego-green);
+      }
+
+      .hero {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 56px 24px 32px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 32px;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.6rem, 4vw, 4rem);
+        margin: 0 0 12px;
+      }
+
+      .hero p {
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        margin: 0 0 18px;
+      }
+
+      .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.8rem;
+      }
+
+      .cta {
+        padding: 12px 18px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--paper);
+        box-shadow: 0 10px 24px var(--shadow);
+      }
+
+      .cta.secondary {
+        background: transparent;
+        border: 1px solid var(--ink);
+        color: var(--ink);
+      }
+
+      .hero-card {
+        background: var(--paper);
+        border-radius: 28px;
+        padding: 22px;
+        box-shadow: 0 24px 60px rgba(27, 22, 19, 0.18);
+        display: grid;
+        gap: 18px;
+      }
+
+      .hero-card .meta {
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: rgba(27, 22, 19, 0.6);
+      }
+
+      .render-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 14px;
+      }
+
+      .member-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+        gap: 14px;
+      }
+
+      .member-card {
+        border-radius: 16px;
+        padding: 12px;
+        background: linear-gradient(135deg, #faf4ec, #f0e4d1);
+        display: grid;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .member-photo {
+        width: 100%;
+        height: 110px;
+        border-radius: 12px;
+        background: linear-gradient(160deg, rgba(29, 91, 69, 0.18), rgba(202, 162, 58, 0.28));
+      }
+
+      .member-name {
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+      }
+
+      .render-tile {
+        border-radius: 16px;
+        padding: 16px;
+        background: linear-gradient(135deg, #faf4ec, #f0e4d1);
+        min-height: 120px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .render-tile::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 70% 20%, rgba(202, 162, 58, 0.35), transparent 60%);
+        opacity: 0.7;
+      }
+
+      .render-tile span {
+        position: relative;
+        z-index: 1;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+      }
+
+      .section {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 24px;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        margin: 0 0 16px;
+      }
+
+      .section-lead {
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        margin: 0 0 24px;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: rgba(27, 22, 19, 0.78);
+      }
+
+      .services {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .service-card {
+        background: var(--paper);
+        border-radius: 20px;
+        padding: 22px;
+        box-shadow: 0 18px 40px var(--shadow);
+        display: grid;
+        gap: 12px;
+      }
+
+      .service-card h3 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+
+      .service-card p {
+        margin: 0;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .service-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .service-tags span {
+        background: rgba(202, 162, 58, 0.25);
+        padding: 6px 10px;
+        border-radius: 999px;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+      }
+
+      .gallery-item {
+        background: var(--paper);
+        border-radius: 20px;
+        padding: 18px;
+        box-shadow: 0 16px 36px var(--shadow);
+        display: grid;
+        gap: 12px;
+      }
+
+      .gallery-visual {
+        border-radius: 14px;
+        height: 180px;
+        background: linear-gradient(140deg, #e8f2f0, #f2e7da);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .gallery-visual::before {
+        content: "";
+        position: absolute;
+        inset: 20% 15% auto 55%;
+        width: 120px;
+        height: 120px;
+        border-radius: 24px 24px 80px 24px;
+        background: linear-gradient(160deg, var(--oswego-green), var(--oswego-gold));
+        transform: rotate(-8deg);
+        opacity: 0.9;
+      }
+
+      .gallery-visual::after {
+        content: "";
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: rgba(202, 162, 58, 0.25);
+      }
+
+      .gallery-item h4 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .gallery-item p {
+        margin: 0;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .process {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .process-step {
+        border-left: 2px solid var(--ink);
+        padding-left: 16px;
+      }
+
+      .process-step h5 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+      }
+
+      .process-step p {
+        margin: 0;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        line-height: 1.5;
+      }
+
+      .banner {
+        margin: 40px 0;
+        background: linear-gradient(110deg, #fef6ea, rgba(202, 162, 58, 0.28));
+        border-radius: 28px;
+        padding: 32px;
+        display: grid;
+        gap: 16px;
+        box-shadow: 0 20px 40px var(--shadow);
+      }
+
+      .banner h3 {
+        margin: 0;
+        font-size: 1.6rem;
+      }
+
+      .banner p {
+        margin: 0;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        line-height: 1.6;
+      }
+
+      .banner .cta {
+        width: fit-content;
+      }
+
+      .shop-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+      }
+
+      .shop-card {
+        background: var(--paper);
+        border-radius: 20px;
+        padding: 22px;
+        box-shadow: 0 18px 40px var(--shadow);
+        display: grid;
+        gap: 12px;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+      }
+
+      .shop-card h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-family: "DM Serif Display", "Georgia", serif;
+      }
+
+      .shop-card label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: rgba(27, 22, 19, 0.7);
+      }
+
+      .shop-card select {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(27, 22, 19, 0.15);
+        font-family: inherit;
+        background: #fff;
+      }
+
+      .shop-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 14px;
+        box-shadow: 0 14px 30px rgba(27, 22, 19, 0.18);
+      }
+
+      .feedback {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+        align-items: start;
+      }
+
+      .feedback h3 {
+        margin: 0 0 10px;
+        font-size: 1.2rem;
+      }
+
+      .feedback-list {
+        margin: 0;
+        padding-left: 18px;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        line-height: 1.6;
+        color: rgba(27, 22, 19, 0.75);
+      }
+
+      .feedback-form {
+        background: var(--paper);
+        border-radius: 20px;
+        padding: 22px;
+        box-shadow: 0 18px 40px var(--shadow);
+        display: grid;
+        gap: 12px;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+      }
+
+      .feedback-form label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: rgba(27, 22, 19, 0.7);
+      }
+
+      .feedback-form input,
+      .feedback-form textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(27, 22, 19, 0.15);
+        background: #fff;
+        font-family: inherit;
+        font-size: 0.95rem;
+      }
+
+      .feedback-form textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .feedback-form button {
+        justify-self: start;
+        border: none;
+        cursor: pointer;
+        background: var(--oswego-green);
+        color: var(--paper);
+        padding: 12px 18px;
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+      }
+
+      .footer {
+        padding: 28px 24px 48px;
+        text-align: center;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: rgba(27, 22, 19, 0.6);
+      }
+
+      .floating-grid {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.6;
+      }
+
+      .floating-grid span {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(29, 91, 69, 0.08);
+        animation: drift 18s ease-in-out infinite;
+      }
+
+      .floating-grid span:nth-child(1) {
+        width: 140px;
+        height: 140px;
+        top: 10%;
+        left: 6%;
+      }
+
+      .floating-grid span:nth-child(2) {
+        width: 220px;
+        height: 220px;
+        top: 60%;
+        left: 12%;
+        animation-delay: -4s;
+      }
+
+      .floating-grid span:nth-child(3) {
+        width: 180px;
+        height: 180px;
+        top: 20%;
+        right: 12%;
+        animation-delay: -8s;
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translateY(0px) scale(1);
+        }
+        50% {
+          transform: translateY(-20px) scale(1.05);
+        }
+        100% {
+          transform: translateY(0px) scale(1);
+        }
+      }
+
+      @media (max-width: 720px) {
+        nav {
+          display: none;
+        }
+
+        .top-bar-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero {
+          padding-top: 32px;
+        }
+
+        .hero-card {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-inner">
+        <div class="brand">
+          Innovation Hub
+          <span>Suny Oswego Aquatic Conservation Lab</span>
+        </div>
+        <nav>
+          <a href="#work">Labware</a>
+          <a href="#services">Services</a>
+          <a href="#process">Process</a>
+          <a href="#feedback">Feedback</a>
+          <a href="#contact">Connect</a>
+          <a class="nav-accent" href="#shop">Shop</a>
+        </nav>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div>
+        <h1>FDM labware crafted for clarity, care, and cost-smart research.</h1>
+        <p>
+          The Innovation Hub at the SUNY Oswego Aquatic Conservation Lab prototypes custom
+          labware and equipment that reduce friction in daily workflows, improve accessibility,
+          and keep more resources focused on research.
+        </p>
+        <div class="hero-cta">
+          <a class="cta" href="#contact">Request a prototype</a>
+          <a class="cta secondary" href="#work">Explore renderings</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="meta">About</div>
+        <h2>Meet the Innovation Hub team.</h2>
+        <div class="member-grid">
+          <div class="member-card">
+            <div class="member-photo" aria-hidden="true"></div>
+            <div class="member-name">Member 1</div>
+          </div>
+          <div class="member-card">
+            <div class="member-photo" aria-hidden="true"></div>
+            <div class="member-name">Member 2</div>
+          </div>
+          <div class="member-card">
+            <div class="member-photo" aria-hidden="true"></div>
+            <div class="member-name">Member 3</div>
+          </div>
+          <div class="member-card">
+            <div class="member-photo" aria-hidden="true"></div>
+            <div class="member-name">Member 4</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" id="work">
+      <h2 class="section-title">Labware renderings</h2>
+      <p class="section-lead">
+        Explorations in form and function for aquatic conservation tasks, from field-ready
+        sampling to bench-top organization. Each design balances print efficiency with clarity
+        of use.
+      </p>
+      <div class="gallery">
+        <article class="gallery-item">
+          <img class="shop-image" src="96Well1.5mlTubeRack.jpg" alt="Rendering of 96-well 1.5 ml tube racks" />
+          <h4>96-well 1.5 ml tube racks</h4>
+          <p>High-visibility racks for quick sample access and storage.</p>
+        </article>
+        <article class="gallery-item">
+          <div class="gallery-visual"></div>
+          <h4>Stackable culture docks</h4>
+          <p>Interlocking geometry keeps fragile cultures organized for rapid transfer.</p>
+        </article>
+        <article class="gallery-item">
+          <div class="gallery-visual"></div>
+          <h4>Flow-measurement caddies</h4>
+          <p>Snap-fit housings store sensors and keep wet tools separated on the bench.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <h2 class="section-title">Services</h2>
+      <p class="section-lead">
+        We translate needs into prototypes in days, not months. Collaborative sprints yield
+        printable tools that are lightweight, washable, and easy to modify.
+      </p>
+      <div class="services">
+        <article class="service-card">
+          <h3>Custom labware design</h3>
+          <p>Human-centered design workshops, CAD ideation, and ergonomic testing.</p>
+          <div class="service-tags">
+            <span>Discovery</span>
+            <span>Concepts</span>
+            <span>CAD</span>
+          </div>
+        </article>
+        <article class="service-card">
+          <h3>Rapid FDM prototyping</h3>
+          <p>Iterative prints tuned for structural stability, chemical resistance, and speed.</p>
+          <div class="service-tags">
+            <span>PLA+</span>
+            <span>PETG</span>
+            <span>ABS</span>
+          </div>
+        </article>
+        <article class="service-card">
+          <h3>Deployment kits</h3>
+          <p>Modular kits for fieldwork with labeling systems and transport-ready assembly.</p>
+          <div class="service-tags">
+            <span>Field use</span>
+            <span>Labeling</span>
+            <span>QA</span>
+          </div>
+        </article>
+        <article class="service-card">
+          <h3>Documentation support</h3>
+          <p>Quick-start sheets and visuals so teams can use tools immediately.</p>
+          <div class="service-tags">
+            <span>Guides</span>
+            <span>Training</span>
+            <span>Support</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <h2 class="section-title">Process</h2>
+      <p class="section-lead">
+        Every build is a collaboration between researchers and designers. We focus on solutions to
+        the daily problems researchers face, not on designing a product or thing for its own sake.
+        The hub is structured to keep ideas moving and costs lean.
+      </p>
+      <div class="process">
+        <div class="process-step">
+          <h5>01 - Listen</h5>
+          <p>Map the task flow, pin down pain points, and align on success metrics.</p>
+        </div>
+        <div class="process-step">
+          <h5>02 - Shape</h5>
+          <p>Design for usability, print speed, and durability with rapid feedback loops.</p>
+        </div>
+        <div class="process-step">
+          <h5>03 - Print</h5>
+          <p>Prototype with tuned FDM materials and refine for sterilization needs.</p>
+        </div>
+        <div class="process-step">
+          <h5>04 - Deliver</h5>
+          <p>Ship or share files, plus documentation and assembly guidance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="feedback">
+      <h2 class="section-title">Feedback</h2>
+      <p class="section-lead">
+        Share any concerns about product development so we can refine solutions that support daily
+        research work. Every note helps us tune fit, workflow, and durability.
+      </p>
+      <div class="feedback">
+        <div>
+          <h3>Tell us what is missing</h3>
+          <p class="section-lead">
+            We review feedback around handling, storage, and day-to-day use before the next print.
+          </p>
+          <ul class="feedback-list">
+            <li>Fit, grip, and ergonomics</li>
+            <li>Cleaning, sterilization, and materials</li>
+            <li>Labeling, visibility, and workflow</li>
+            <li>Assembly, durability, and transport</li>
+          </ul>
+        </div>
+        <form class="feedback-form" action="mailto:innovationhub@sunyoswego.edu" method="post" enctype="text/plain">
+          <label for="feedback-name">Name</label>
+          <input id="feedback-name" name="name" type="text" placeholder="Your name" />
+          <label for="feedback-email">Email</label>
+          <input id="feedback-email" name="email" type="email" placeholder="you@sunyoswego.edu" />
+          <label for="feedback-notes">Concerns or ideas</label>
+          <textarea id="feedback-notes" name="notes" placeholder="Share pain points or suggestions"></textarea>
+          <button type="submit">Send feedback</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <h2 class="section-title">Shop</h2>
+      <p class="section-lead">
+        Pilot-ready bundles for lab workflows. Inventory is limited while we test fit and materials.
+      </p>
+      <div class="shop-grid">
+        <div class="shop-card">
+          <h3>eDNA filter housing orders</h3>
+          <p>Order quantities for rapid field deployment. Pricing quoted per batch.</p>
+          <label for="edna-qty">Quantity</label>
+          <select id="edna-qty" name="quantity">
+            <option>50 units</option>
+            <option>100 units</option>
+            <option>150 units</option>
+            <option>200 units</option>
+            <option>250 units</option>
+            <option>300 units</option>
+            <option>400 units</option>
+            <option>500 units</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2 class="section-title">Connect</h2>
+      <p class="section-lead">
+        Contact the Innovation Hub for upcoming needs, collaborations, and pilot requests.
+      </p>
+      <div class="banner">
+        <h3>Contact us for future needs.</h3>
+        <p>
+          This site is a concept for internal review. Share your project idea and we will mock up
+          a printable response kit.
+        </p>
+        <a class="cta" href="mailto:innovationhub@sunyoswego.edu">Start the conversation</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Innovation Hub - SUNY Oswego Aquatic Conservation Lab - Prototype concept
+    </footer>
+
+    <div class="floating-grid" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </body>
+</html>
